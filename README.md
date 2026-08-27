@@ -282,6 +282,81 @@ Add project collaborators here:
 | Collaborator 3 | Developer | @username |
 
 ---
+### AI Module Architecture
+
+```text
+Frontend (React)
+      │
+      ▼
+Backend (Node.js + Express)
+      │
+    Axios
+      │
+      ▼
+AI Service (FastAPI)
+      │
+      ├── Line Count Analysis
+      ├── Function Count Analysis
+      └── Complexity Analysis
+      │
+      ▼
+JSON Response
+```
+
+### AI Service Structure
+
+```text
+ai-service/
+│
+├── app.py
+│
+└── code_analysis/
+    ├── metrics.py
+    └── complexity.py
+```
+
+### Current Features
+
+- Code Line Count Analysis
+- Function Count Analysis
+- Basic Complexity Analysis
+- FastAPI REST API
+- Swagger API Documentation
+
+### Sample Input
+
+```python
+def hello():
+    print("Hello World")
+```
+
+### Sample Output
+
+```json
+{
+  "lines": 2,
+  "functions": 1,
+  "complexity": 3
+}
+```
+
+### Technologies Used
+
+- Python
+- FastAPI
+- Uvicorn
+- Pydantic
+- Axios
+
+### Future Enhancements
+
+- Advanced Complexity Analysis
+- AI-Based Code Review
+- Coding Assistant
+- Interview Feedback System
+- Gemini API Integration
+- Groq API Integration
+- Automated Programming Suggestions
 
 ## 📌 Project Status
 
