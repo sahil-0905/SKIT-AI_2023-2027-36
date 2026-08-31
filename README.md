@@ -53,7 +53,7 @@ git clone <YOUR_GITHUB_REPOSITORY_URL>
 Move into the project directory:
 
 ```bash
-cd FinalYear
+cd SKIT-AI_2023-2027-36
 ```
 
 ---
