@@ -17,9 +17,13 @@ function Navbar() {
     <div className="flex items-center justify-between px-8 py-4 bg-panel border-b border-border">
       
       <Link to="/" className="flex items-center gap-2">
-        <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-white font-bold text-sm">
-          {"</>"}
-        </div>
+       <div className="w-8 h-8 rounded-lg overflow-hidden">
+  <img
+    src="/logo.png"
+    alt="Logo"
+    className="w-full h-full object-cover"
+  />
+</div>
         <span className="font-bold text-text">AI-Powered Coding Platform</span>
       </Link>
 
