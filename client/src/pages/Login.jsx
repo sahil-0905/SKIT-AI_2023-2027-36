@@ -1,12 +1,14 @@
-import React from 'react'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Login = () => {
+function LoginPage() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -14,10 +16,30 @@ const Login = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-  }
+    setError("");
+
+    try {
+      const response = await axios.post("http://localhost:8080/api/auth/login", formData);
+      
+      // token ko save karo (localStorage me) - taaki refresh hone pe bhi login rahe
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("role", response.data.user.role);
+      localStorage.setItem("name", response.data.user.name);
+
+      // role ke hisaab se redirect
+      if (response.data.user.role === "student") {
+        navigate("/student-dashboard");
+      } else {
+        navigate("/interviewer-dashboard");
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "Something went wrong");
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-bg">
       <div className="bg-panel border border-border rounded-2xl p-10 w-full max-w-md">
@@ -35,6 +57,12 @@ const Login = () => {
         <p className="text-sm text-muted text-center mb-6">
           Log in to continue your session
         </p>
+
+        {error && (
+          <div className="bg-red/15 text-red text-sm rounded-lg px-4 py-2 mb-4 text-center">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -71,14 +99,14 @@ const Login = () => {
 
         <p className="text-center text-sm text-muted mt-5">
           Don't have an account?{" "}
-          <Link to="/signup" className="text-accent font-semibold cursor-pointer">
+          <Link to="/signup" className="text-accent font-semibold">
             Sign up
           </Link>
         </p>
 
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default LoginPage;

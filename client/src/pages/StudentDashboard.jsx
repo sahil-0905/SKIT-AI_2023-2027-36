@@ -1,6 +1,18 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
+const name = localStorage.getItem("name");
 
 const StudentDashboard = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    navigate("/");
+  };
+  
+
   return (
     <div className="min-h-screen flex bg-bg">
       
@@ -24,10 +36,16 @@ const StudentDashboard = () => {
           <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white text-xs font-bold">
             SK
           </div>
-          <div>
-            <p className="text-sm text-text">Sahil Kumar</p>
+          <div className="flex-1">
+            <p className="text-sm text-text">{name}</p>
             <p className="text-xs text-muted">Student</p>
           </div>
+          <button
+            onClick={handleLogout}
+            className="text-muted hover:text-red text-xs font-semibold"
+          >
+            Logout
+          </button>
         </div>
       </div>
 
@@ -35,7 +53,7 @@ const StudentDashboard = () => {
       <div className="flex-1 p-8">
         
         <div className="mb-6">
-          <h1 className="text-xl font-bold text-text">Welcome back, Sahil</h1>
+          <h1 className="text-xl font-bold text-text">Welcome back, {name}</h1>
           <p className="text-sm text-muted">Keep your streak going</p>
         </div>
 

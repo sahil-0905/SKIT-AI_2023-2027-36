@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function SignupPage() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     role: "student",
   });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -16,9 +19,16 @@ function SignupPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setError("");
+
+    try {
+      await axios.post("http://localhost:8080/api/auth/signup", formData);
+      navigate("/login");
+    } catch (err) {
+      setError(err.response?.data?.message || "Something went wrong");
+    }
   };
 
   return (
@@ -39,14 +49,18 @@ function SignupPage() {
           Start your coding interview journey
         </p>
 
+        {error && (
+          <div className="bg-red/15 text-red text-sm rounded-lg px-4 py-2 mb-4 text-center">
+            {error}
+          </div>
+        )}
+
         <div className="flex bg-input border border-border rounded-lg p-1 mb-6">
           <button
             type="button"
             onClick={() => setFormData({ ...formData, role: "student" })}
             className={`flex-1 py-2 rounded-md text-sm font-semibold ${
-              formData.role === "student"
-                ? "bg-accent text-white"
-                : "text-muted"
+              formData.role === "student" ? "bg-accent text-white" : "text-muted"
             }`}
           >
             Student
@@ -55,9 +69,7 @@ function SignupPage() {
             type="button"
             onClick={() => setFormData({ ...formData, role: "interviewer" })}
             className={`flex-1 py-2 rounded-md text-sm font-semibold ${
-              formData.role === "interviewer"
-                ? "bg-accent text-white"
-                : "text-muted"
+              formData.role === "interviewer" ? "bg-accent text-white" : "text-muted"
             }`}
           >
             Interviewer
@@ -72,7 +84,7 @@ function SignupPage() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Enter your full name"
+              placeholder="Sahil Kumar"
               className="w-full bg-input border border-border rounded-lg px-3 py-2 text-text outline-none"
             />
           </div>
@@ -111,8 +123,8 @@ function SignupPage() {
 
         <p className="text-center text-sm text-muted mt-5">
           Already have an account?{" "}
-          <Link to="/login" className="text-accent font-semibold cursor-pointer">
-            Sign in
+          <Link to="/login" className="text-accent font-semibold">
+            Log in
           </Link>
         </p>
 

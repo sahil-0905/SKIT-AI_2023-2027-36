@@ -1,69 +1,71 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Moon, Sun } from "lucide-react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 function Navbar() {
-  const [darkMode, setDarkMode] = useState(true);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    navigate("/");
+  };
 
   return (
-    <nav className="w-full h-20 bg-[#111219] border-b border-white/10 px-8 flex items-center justify-between">
+    <div className="flex items-center justify-between px-8 py-4 bg-panel border-b border-border">
+      
+      <Link to="/" className="flex items-center gap-2">
+        <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-white font-bold text-sm">
+          {"</>"}
+        </div>
+        <span className="font-bold text-text">AI-Powered Coding Platform</span>
+      </Link>
 
-      {/* Left Navigation */}
-      <div className="flex items-center gap-1 bg-[#090a0f] border border-white/10 rounded-xl p-1">
+      <div className="flex items-center gap-5">
+        
+        {!token && (
+          <>
+            <Link to="/login" className="text-sm text-muted font-semibold">
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className="bg-accent text-white text-sm font-bold px-4 py-2 rounded-lg"
+            >
+              Sign Up
+            </Link>
+          </>
+        )}
 
-        <Link
-          to="/login"
-          className="px-5 py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-violet-500 text-white font-semibold text-sm"
-        >
-          Login
-        </Link>
+        {token && role === "student" && (
+          <>
+            <Link to="/student-dashboard" className="text-sm text-muted font-semibold">
+              Dashboard
+            </Link>
+            <Link to="/practice" className="text-sm text-muted font-semibold">
+              Practice
+            </Link>
+            <button onClick={handleLogout} className="text-sm text-red font-semibold">
+              Logout
+            </button>
+          </>
+        )}
 
-        <Link
-          to="/student-dashboard"
-          className="px-5 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 font-semibold text-sm transition"
-        >
-          Student Dashboard
-        </Link>
-
-        <Link
-          to="/interviewer-dashboard"
-          className="px-5 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 font-semibold text-sm transition"
-        >
-          Interviewer Dashboard
-        </Link>
-
-      </div>
-
-      {/* Theme Toggle */}
-      <div className="flex items-center gap-1 bg-[#090a0f] border border-white/10 rounded-full p-1">
-
-        <button
-          onClick={() => setDarkMode(true)}
-          className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition ${
-            darkMode
-              ? "bg-purple-600 text-white"
-              : "text-gray-400 hover:text-white"
-          }`}
-        >
-          <Moon size={15} />
-          Dark
-        </button>
-
-        <button
-          onClick={() => setDarkMode(false)}
-          className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition ${
-            !darkMode
-              ? "bg-purple-600 text-white"
-              : "text-gray-400 hover:text-white"
-          }`}
-        >
-          <Sun size={15} />
-          Light
-        </button>
+        {token && role === "interviewer" && (
+          <>
+            <Link to="/interviewer-dashboard" className="text-sm text-muted font-semibold">
+              Dashboard
+            </Link>
+            <button onClick={handleLogout} className="text-sm text-red font-semibold">
+              Logout
+            </button>
+          </>
+        )}
 
       </div>
-
-    </nav>
+    </div>
   );
 }
 
