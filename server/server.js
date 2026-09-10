@@ -1,10 +1,14 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import dns from "dns";
 import authRoutes from "./routes/authRoutes.js";
 import problemRoutes from "./routes/ProblemRoutes.js";
 import cors from "cors";
 import executeRoutes from "./routes/executeRoutes.js";
+
+// Set reliable DNS servers for MongoDB Atlas SRV lookup on local machines
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 dotenv.config();
 
