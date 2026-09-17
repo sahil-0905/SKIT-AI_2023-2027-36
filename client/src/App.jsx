@@ -9,6 +9,8 @@ import ProblemSolvePage from "./pages/ProblemSolvePage";
 import InterviewerDashboard from "./pages/InterviewerDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CreateProblemPage from "./pages/CreateProblemPage";
+import ScheduleInterviewPage from "./pages/ScheduleInterviewPage";
+
 
 function App() {
   return (
@@ -39,6 +41,14 @@ function App() {
           element={
             <ProtectedRoute allowedRole="interviewer">
               <CreateProblemPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/schedule-interview"
+          element={
+            <ProtectedRoute allowedRole="interviewer">
+              <ScheduleInterviewPage />
             </ProtectedRoute>
           }
         />

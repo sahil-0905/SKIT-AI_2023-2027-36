@@ -6,6 +6,7 @@ import authRoutes from "./routes/authRoutes.js";
 import problemRoutes from "./routes/ProblemRoutes.js";
 import cors from "cors";
 import executeRoutes from "./routes/executeRoutes.js";
+import interviewRoutes from "./routes/interviewRoutes.js";
 
 // Set reliable DNS servers for MongoDB Atlas SRV lookup on local machines
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
@@ -30,6 +31,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/problems", problemRoutes);
 app.use("/api/execute", executeRoutes);
+app.use("/api/interviews", interviewRoutes);
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
 });

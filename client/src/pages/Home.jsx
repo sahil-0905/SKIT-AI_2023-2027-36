@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ThreeBackground from "../components/ThreeBackground";
 
 function Home() {
   const token = localStorage.getItem("token");
@@ -11,11 +12,10 @@ function Home() {
     <div className="min-h-screen bg-bg">
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute top-[-20%] left-[-10%] w-[55%] h-[55%] rounded-full bg-accent/20 blur-3xl"></div>
-        <div className="absolute bottom-[-20%] right-[-10%] w-[55%] h-[55%] rounded-full bg-green/15 blur-3xl"></div>
+      <div className="relative overflow-hidden min-h-[600px]">
+        <ThreeBackground />
 
-        <div className="relative max-w-4xl mx-auto text-center px-6 pt-28 pb-20">
+        <div className="relative z-10 max-w-4xl mx-auto text-center px-6 pt-28 pb-20">
           <span className="inline-block bg-accent-soft text-accent text-xs font-bold px-4 py-1.5 rounded-full mb-6">
             AI-Powered · Secure · Real-time
           </span>
@@ -58,8 +58,8 @@ function Home() {
         </div>
       </div>
 
-      {/* Features Section */}
-      <div className="max-w-5xl mx-auto px-6 pb-24">
+      {/* Features Section - same as before */}
+      <div className="max-w-5xl mx-auto px-6 pb-24 relative z-10">
         <div className="grid md:grid-cols-3 gap-6">
 
           <div className="bg-panel border border-border rounded-2xl p-6">
